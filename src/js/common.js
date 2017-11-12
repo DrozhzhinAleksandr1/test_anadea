@@ -2,9 +2,14 @@ window.onload = function(){
 	// get a select with number elements
 	var select = document.getElementsByClassName('cardGameSize')[0],
 	// get a container for the game
-		containerForCards = document.getElementsByClassName('containerForCards')[0];
+		containerForCards = document.getElementsByClassName('containerForCards')[0],
+		// take mux number iteration
+		maxNumber;
+
+
 		// construct a field with cards when the page loads
-		buildCardGame(6);
+		buildCardGame(6),
+
 	
 	// if select change run buildCardGame
 	select.addEventListener('change', function(){
@@ -26,7 +31,7 @@ window.onload = function(){
 	// build card game
 	function buildCardGame(number){
 		// take mux number iteration
-		var maxNumber = number*number,
+		maxNumber = number*number,
 		// take half from nax number
 			halfMaxNumber = maxNumber/2;
 		// clear card game container
@@ -56,10 +61,13 @@ window.onload = function(){
 
 	
 
-
+	// mark the selected cards
 	function CardAddClassSelected(elem){
 		elem.classList.add('containerForCards__cards_selected');
 	}
+	// if 2 cards are selected to remove the class select
+
+	// и после проверить есть ли смысл продолжать игру
 
 	function ifSelectedCards2RemoveClassSelected(selectedCard){
 		viewingPermission = false;
@@ -69,7 +77,58 @@ window.onload = function(){
 				selectedCard[i].classList.remove('containerForCards__cards_selected');
 			}
 			viewingPermission = true;
+
+			if(+maxNumber == +getNumberDisabledCards()){
+				countResultPerGame();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				
+			} 
+
 		}, 700);
+	}
+
+
+	// if Identical Selected Cards add class selected disabled
+
+
+	// and add 1 points
+
+	var pointsPerGame = document.getElementsByClassName('pointsForGames_text')[0];
+
+	// or add 1 lose point
+	var losePointsPerGame = document.getElementsByClassName('pointsForGames_text')[1];
+
+	var winPointsPerGame = document.getElementsByClassName('pointsForGames_text')[2];
+
+	// count the result per game
+
+	function countResultPerGame(){
+		winPointsPerGame.innerHTML = pointsPerGame.innerHTML*10 - losePointsPerGame.innerHTML;
 	}
 
 	function ifIdenticalSelectedCards(){
@@ -79,11 +138,22 @@ window.onload = function(){
 				for(var i=1;i>=0;i--){
 					selectedCard[i].classList.add('containerForCards__cards_disabled');
 				}
+				// add points
+				pointsPerGame.innerHTML = +pointsPerGame.innerHTML + 1;
 				ifSelectedCards2RemoveClassSelected(selectedCard);
 			} else{
 				ifSelectedCards2RemoveClassSelected(selectedCard);
+				losePointsPerGame.innerHTML = +losePointsPerGame.innerHTML + 1;
 			}
 		}
+	}
+
+	// check for the number of cards disabled
+	function getNumberDisabledCards(){
+		// присутсвуюзее количесво карт
+		var disabledCards = document.getElementsByClassName('containerForCards__cards_disabled'),
+			numberDisabledCards = disabledCards.length;
+			return numberDisabledCards;
 	}
 
 
