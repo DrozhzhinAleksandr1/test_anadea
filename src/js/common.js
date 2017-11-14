@@ -1,6 +1,6 @@
 window.onload = function(){
 	// get a select with number elements
-	var select = document.getElementsByClassName('cardGameSize')[0],
+	var select = document.getElementsByClassName('containerWithInformations__cardGameSize')[0],
 	// get a container for the game
 		containerForCards = document.getElementsByClassName('containerForCards')[0],
 		// take mux number iteration
@@ -8,7 +8,7 @@ window.onload = function(){
 
 
 		// construct a field with cards when the page loads
-		buildCardGame(6),
+		buildCardGame(2),
 
 	
 	// if select change run buildCardGame
@@ -80,33 +80,7 @@ window.onload = function(){
 
 			if(+maxNumber == +getNumberDisabledCards()){
 				countResultPerGame();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-				
+			
 			} 
 
 		}, 700);
@@ -118,17 +92,19 @@ window.onload = function(){
 
 	// and add 1 points
 
-	var pointsPerGame = document.getElementsByClassName('pointsForGames_text')[0];
+	var pointsPerGame = document.getElementsByClassName('pointsForGames_text')[0].getElementsByTagName('span')[0];
 
 	// or add 1 lose point
-	var losePointsPerGame = document.getElementsByClassName('pointsForGames_text')[1];
-
-	var winPointsPerGame = document.getElementsByClassName('pointsForGames_text')[2];
+	var losePointsPerGame = document.getElementsByClassName('pointsForGames_text')[1].getElementsByTagName('span')[0];
+	// очки за одну партию 
+	var winPointsPerGame = document.getElementsByClassName('pointsForGames_text')[2].getElementsByTagName('span')[0];
+	// таймер 
+	var elapsedTimePerGame = document.getElementsByClassName('pointsForGames_text')[3].getElementsByTagName('span')[0];
 
 	// count the result per game
 
 	function countResultPerGame(){
-		winPointsPerGame.innerHTML = pointsPerGame.innerHTML*10 - losePointsPerGame.innerHTML;
+		winPointsPerGame.innerHTML = pointsPerGame.innerHTML*10 - losePointsPerGame.innerHTML - Math.floor(elapsedTimePerGame.innerHTML / 10);
 	}
 
 	function ifIdenticalSelectedCards(){
@@ -175,6 +151,59 @@ window.onload = function(){
 
 		
 	});
+
+
+
+
+
+
+// интервал и все что с ним связано
+	// переменная для времени
+	var int = 1;
+	// переменная для таймера
+	var timer;
+	// добавим контейнеру класс для старта таймера при первом нажатии
+	containerForCards.classList.add('startTimer');
+
+	function startTimer(){
+		if(containerForCards.classList.contains('startTimer')){
+			containerForCards.classList.remove('startTimer');
+			timer = setInterval(function(){
+				elapsedTimePerGame.innerHTML = int++;
+			},1000);
+		}
+	}
+
+	function ifGameOverStopTimer(){
+		if(+maxNumber == +getNumberDisabledCards()){
+			clearInterval(timer);
+		}
+	}
+
+	containerForCards.addEventListener('click', startTimer);
+	containerForCards.addEventListener('click', ifGameOverStopTimer);
+
+
+	var containerWithInformationsBtn = document.getElementsByClassName('containerWithInformations__btn')[0];
+	containerWithInformationsBtn.addEventListener('click',function(){
+		if(containerWithInformationsBtn.classList.contains('containerWithInformations__btn_pause')){
+			containerWithInformationsBtn.classList.add('containerWithInformations__btn_resume');
+			containerWithInformationsBtn.classList.remove('containerWithInformations__btn_pause');
+			containerWithInformationsBtn.innerHTML = 'возобновить';
+			clearInterval(timer);
+		} else if(containerWithInformationsBtn.classList.contains('containerWithInformations__btn_resume')){
+			containerWithInformationsBtn.classList.add('containerWithInformations__btn_pause');
+			containerWithInformationsBtn.classList.remove('containerWithInformations__btn_resume');
+			containerWithInformationsBtn.innerHTML = 'пауза';
+			timer = setInterval(function(){
+				elapsedTimePerGame.innerHTML = int++;
+			},1000);
+		}
+	});
+
+
+	
+
 
 	
 
