@@ -72,6 +72,9 @@ div,button { outline: none;
 	overflow: hidden;
 	float: left;
 }
+.containerForCards_disabled{
+	pointer-events: none;
+}
 .containerForCards__cards{
 	float: left;
 	background-color: orange;
@@ -197,7 +200,15 @@ div,button { outline: none;
 	color: rgb(3, 198, 0);
 	border-color: rgb(3, 198, 0);
 }
+.containerWithInformations__btn_restart{
+	color: rgb(188, 43, 43);
+	border-color: rgb(188, 43, 43);
+}
+.containerWithInformations__btn_restart:hover{
+	color: rgb(249, 44, 44);
+	border-color: rgb(249, 44, 44);
 
+}
 
 
 @media screen and (max-width: 1200px){
@@ -221,3 +232,42 @@ div,button { outline: none;
 }
 
 
+
+
+/*result table*/
+
+/*245 145 120 rose
+90 200 200 blue*/
+
+
+.bestResults{
+	width: 1200px;
+	border-radius: 10px;
+	background-color: rgb(188, 43, 43);
+	color: rgb(255,255,255);
+	float: left;
+	padding: 10px 0 20px;
+}
+.bestResults__h2{
+	font-size: 32px;
+	font-weight: bold;
+	font-style: italic;
+	text-align: center;
+	padding-bottom: 15px;
+}
+.pointsForGames_results{
+	float: left;
+	width: 25%;
+	text-align: center;
+}
+@media screen and (max-width: 1200px){
+	.bestResults{
+		width: 1000px;
+	}
+}
+@media screen and (max-width: 1200px){
+	.bestResults{
+		width: 800px;
+	}
+}
+	

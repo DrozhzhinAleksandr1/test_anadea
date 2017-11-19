@@ -6,16 +6,88 @@ window.onload = function(){
 		// take mux number iteration
 		maxNumber;
 
+	// if Identical Selected Cards add class selected disabled
+	// and add 1 points
 
-		// construct a field with cards when the page loads
-		buildCardGame(2),
+	var pointsPerGame = document.getElementsByClassName('pointsForGames__text')[0].getElementsByTagName('span')[0];
+	// or add 1 lose point
+	var losePointsPerGame = document.getElementsByClassName('pointsForGames__text')[1].getElementsByTagName('span')[0];
+	// очки за одну партию 
+	var winPointsPerGame = document.getElementsByClassName('pointsForGames__text')[2].getElementsByTagName('span')[0];
+	// таймер 
+	var elapsedTimePerGame = document.getElementsByClassName('pointsForGames__text')[3].getElementsByTagName('span')[0];
 
-	
+	// переменная для времени
+	var timerCount = 1;
+	// переменная для таймера
+	var timer;
+	// пауза рестарт
+	var containerWithInformationsBtnPauseAndRemove = document.getElementsByClassName('containerWithInformations__btn')[0];
+	// пауза рестарт
+	var containerWithInformationsBtnRestart = document.getElementsByClassName('containerWithInformations__btn')[1];
+
+	// таблица
+	// 6
+	var pointsForGames6LosePointsPerGame = document.getElementsByClassName('pointsForGames_6')[0].getElementsByTagName('span')[0];
+	var pointsForGames6WinPointsPerGame = document.getElementsByClassName('pointsForGames_6')[0].getElementsByTagName('span')[1];
+	var pointsForGames6ElapsedTimePerGame = document.getElementsByClassName('pointsForGames_6')[0].getElementsByTagName('span')[2];
+	// 8
+	var pointsForGames8LosePointsPerGame = document.getElementsByClassName('pointsForGames_8')[0].getElementsByTagName('span')[0];
+	var pointsForGames8WinPointsPerGame = document.getElementsByClassName('pointsForGames_8')[0].getElementsByTagName('span')[1];
+	var pointsForGames8ElapsedTimePerGame = document.getElementsByClassName('pointsForGames_8')[0].getElementsByTagName('span')[2];
+	// 10
+	var pointsForGames10LosePointsPerGame = document.getElementsByClassName('pointsForGames_10')[0].getElementsByTagName('span')[0];
+	var pointsForGames10WinPointsPerGame = document.getElementsByClassName('pointsForGames_10')[0].getElementsByTagName('span')[1];
+	var pointsForGames10ElapsedTimePerGame = document.getElementsByClassName('pointsForGames_10')[0].getElementsByTagName('span')[2];
+	// 12
+	var pointsForGames12LosePointsPerGame = document.getElementsByClassName('pointsForGames_12')[0].getElementsByTagName('span')[0];
+	var pointsForGames12WinPointsPerGame = document.getElementsByClassName('pointsForGames_12')[0].getElementsByTagName('span')[1];
+	var pointsForGames12ElapsedTimePerGame = document.getElementsByClassName('pointsForGames_12')[0].getElementsByTagName('span')[2];
+
+	// construct a field with cards when the page loads
+	buildCardGame(6);
+	// load info from localStorage
+	loadLocalStarageInfoToATable();
+
 	// if select change run buildCardGame
 	select.addEventListener('change', function(){
 		var selectValue = +select.value;
-		buildCardGame(selectValue);
+		buildCardGameWhenClick(selectValue);	
 	});
+
+	// if select change run buildCardGame
+	containerWithInformationsBtnRestart.addEventListener('click', function(){
+		var selectValue = +select.value;
+		buildCardGameWhenClick(selectValue);	
+	});
+
+	function buildCardGameWhenClick(selectValue){
+		buildCardGame(selectValue);
+		// добавляет клас для запуска таймера
+		if (!containerForCards.classList.contains('startTimer')) {
+			containerForCards.classList.add('startTimer');
+		}
+		// отключает блокировку поля с картами
+		if (containerForCards.classList.contains('containerForCards_disabled')) {
+			containerForCards.classList.remove('containerForCards_disabled');
+		}
+		// обнуляем таймер и время
+		clearInterval(timer);
+		timerCount = 1;
+		// обнуляет очки в таблице
+		pointsPerGame.innerHTML = 0;
+		losePointsPerGame.innerHTML = 0;
+		winPointsPerGame.innerHTML = 0;
+		elapsedTimePerGame.innerHTML = 0;
+		// ставит кнопку на значение пауза
+		if(containerWithInformationsBtnPauseAndRemove.classList.contains('containerWithInformations__btn_resume')){
+		// изменяет внешний вид кнопки
+			containerWithInformationsBtnPauseAndRemove.classList.add('containerWithInformations__btn_pause');
+			containerWithInformationsBtnPauseAndRemove.classList.remove('containerWithInformations__btn_resume');
+			containerWithInformationsBtnPauseAndRemove.innerHTML = 'пауза';
+		}
+	}
+
 	// create and add elem to card game
 	function appendDiv(number, divNumber){
 		// create card elem
@@ -80,31 +152,79 @@ window.onload = function(){
 
 			if(+maxNumber == +getNumberDisabledCards()){
 				countResultPerGame();
-			
+				transferTheResultToATable();			
 			} 
 
 		}, 700);
 	}
 
 
-	// if Identical Selected Cards add class selected disabled
 
-
-	// and add 1 points
-
-	var pointsPerGame = document.getElementsByClassName('pointsForGames_text')[0].getElementsByTagName('span')[0];
-
-	// or add 1 lose point
-	var losePointsPerGame = document.getElementsByClassName('pointsForGames_text')[1].getElementsByTagName('span')[0];
-	// очки за одну партию 
-	var winPointsPerGame = document.getElementsByClassName('pointsForGames_text')[2].getElementsByTagName('span')[0];
-	// таймер 
-	var elapsedTimePerGame = document.getElementsByClassName('pointsForGames_text')[3].getElementsByTagName('span')[0];
 
 	// count the result per game
 
 	function countResultPerGame(){
-		winPointsPerGame.innerHTML = pointsPerGame.innerHTML*10 - losePointsPerGame.innerHTML - Math.floor(elapsedTimePerGame.innerHTML / 10);
+		if(+select.value == 6){
+			winPointsPerGame.innerHTML = pointsPerGame.innerHTML*10 - losePointsPerGame.innerHTML - Math.floor(elapsedTimePerGame.innerHTML / 10);
+		}
+		if(+select.value == 8){
+			winPointsPerGame.innerHTML = pointsPerGame.innerHTML*20 - losePointsPerGame.innerHTML - Math.floor(elapsedTimePerGame.innerHTML / 10);
+		}
+		if(+select.value == 10){
+			winPointsPerGame.innerHTML = pointsPerGame.innerHTML*40 - losePointsPerGame.innerHTML - Math.floor(elapsedTimePerGame.innerHTML / 10);
+		}
+		if(+select.value == 12){
+			winPointsPerGame.innerHTML = pointsPerGame.innerHTML*80 - losePointsPerGame.innerHTML - Math.floor(elapsedTimePerGame.innerHTML / 10);
+		}
+	}
+
+	// переносит результат в таблицу 
+
+
+	function transferTheResultToATable(){
+		if(+select.value == 6){
+			if(pointsForGames6WinPointsPerGame.innerHTML < winPointsPerGame.innerHTML){
+				pointsForGames6LosePointsPerGame.innerHTML = losePointsPerGame.innerHTML;
+				pointsForGames6WinPointsPerGame.innerHTML = winPointsPerGame.innerHTML;
+				pointsForGames6ElapsedTimePerGame.innerHTML = elapsedTimePerGame.innerHTML;
+				localStorage["pointsForGames6LosePointsPerGame"] = losePointsPerGame.innerHTML;
+				localStorage["pointsForGames6WinPointsPerGame"] = winPointsPerGame.innerHTML;
+				localStorage["pointsForGames6ElapsedTimePerGame"] = elapsedTimePerGame.innerHTML;
+			}
+		}
+		if(+select.value == 8){
+			if(pointsForGames8WinPointsPerGame.innerHTML < winPointsPerGame.innerHTML){
+				pointsForGames8LosePointsPerGame.innerHTML = losePointsPerGame.innerHTML;
+				pointsForGames8WinPointsPerGame.innerHTML = winPointsPerGame.innerHTML;
+				pointsForGames8ElapsedTimePerGame.innerHTML = elapsedTimePerGame.innerHTML;
+				localStorage["pointsForGames8LosePointsPerGame"] = losePointsPerGame.innerHTML;
+				localStorage["pointsForGames8WinPointsPerGame"] = winPointsPerGame.innerHTML;
+				localStorage["pointsForGames8ElapsedTimePerGame"] = elapsedTimePerGame.innerHTML;
+			}
+
+		}
+		if(+select.value == 10){
+			if(pointsForGames10WinPointsPerGame.innerHTML < winPointsPerGame.innerHTML){
+				pointsForGames10LosePointsPerGame.innerHTML = losePointsPerGame.innerHTML;
+				pointsForGames10WinPointsPerGame.innerHTML = winPointsPerGame.innerHTML;
+				pointsForGames10ElapsedTimePerGame.innerHTML = elapsedTimePerGame.innerHTML;
+				localStorage["pointsForGames10LosePointsPerGame"] = losePointsPerGame.innerHTML;
+				localStorage["pointsForGames10WinPointsPerGame"] = winPointsPerGame.innerHTML;
+				localStorage["pointsForGames10ElapsedTimePerGame"] = elapsedTimePerGame.innerHTML;
+			}
+
+		}
+		if(+select.value == 12){
+			if(pointsForGames12WinPointsPerGame.innerHTML < winPointsPerGame.innerHTML){
+				pointsForGames12LosePointsPerGame.innerHTML = losePointsPerGame.innerHTML;
+				pointsForGames12WinPointsPerGame.innerHTML = winPointsPerGame.innerHTML;
+				pointsForGames12ElapsedTimePerGame.innerHTML = elapsedTimePerGame.innerHTML;
+				localStorage["pointsForGames12LosePointsPerGame"] = losePointsPerGame.innerHTML;
+				localStorage["pointsForGames12WinPointsPerGame"] = winPointsPerGame.innerHTML;
+				localStorage["pointsForGames12ElapsedTimePerGame"] = elapsedTimePerGame.innerHTML;
+			}
+		}
+
 	}
 
 	function ifIdenticalSelectedCards(){
@@ -158,10 +278,6 @@ window.onload = function(){
 
 
 // интервал и все что с ним связано
-	// переменная для времени
-	var int = 1;
-	// переменная для таймера
-	var timer;
 	// добавим контейнеру класс для старта таймера при первом нажатии
 	containerForCards.classList.add('startTimer');
 
@@ -169,7 +285,7 @@ window.onload = function(){
 		if(containerForCards.classList.contains('startTimer')){
 			containerForCards.classList.remove('startTimer');
 			timer = setInterval(function(){
-				elapsedTimePerGame.innerHTML = int++;
+				elapsedTimePerGame.innerHTML = timerCount++;
 			},1000);
 		}
 	}
@@ -179,31 +295,66 @@ window.onload = function(){
 			clearInterval(timer);
 		}
 	}
-
+	// активация функций
 	containerForCards.addEventListener('click', startTimer);
 	containerForCards.addEventListener('click', ifGameOverStopTimer);
 
-
-	var containerWithInformationsBtn = document.getElementsByClassName('containerWithInformations__btn')[0];
-	containerWithInformationsBtn.addEventListener('click',function(){
-		if(containerWithInformationsBtn.classList.contains('containerWithInformations__btn_pause')){
-			containerWithInformationsBtn.classList.add('containerWithInformations__btn_resume');
-			containerWithInformationsBtn.classList.remove('containerWithInformations__btn_pause');
-			containerWithInformationsBtn.innerHTML = 'возобновить';
-			clearInterval(timer);
-		} else if(containerWithInformationsBtn.classList.contains('containerWithInformations__btn_resume')){
-			containerWithInformationsBtn.classList.add('containerWithInformations__btn_pause');
-			containerWithInformationsBtn.classList.remove('containerWithInformations__btn_resume');
-			containerWithInformationsBtn.innerHTML = 'пауза';
-			timer = setInterval(function(){
-				elapsedTimePerGame.innerHTML = int++;
-			},1000);
+	// изменения кнопки
+	
+	containerWithInformationsBtnPauseAndRemove.addEventListener('click',function(){
+		if(!containerForCards.classList.contains('startTimer')){
+			// изменяет внешний вид кнопки
+			if(containerWithInformationsBtnPauseAndRemove.classList.contains('containerWithInformations__btn_pause')){
+				containerWithInformationsBtnPauseAndRemove.classList.add('containerWithInformations__btn_resume');
+				containerWithInformationsBtnPauseAndRemove.classList.remove('containerWithInformations__btn_pause');
+				containerWithInformationsBtnPauseAndRemove.innerHTML = 'возобновить';
+				// останавливает таймер
+				clearInterval(timer);
+				// запрещает нажимать по полю
+				containerForCards.classList.add('containerForCards_disabled');
+			} else if(containerWithInformationsBtnPauseAndRemove.classList.contains('containerWithInformations__btn_resume')){
+			// изменяет внешний вид кнопки
+				containerWithInformationsBtnPauseAndRemove.classList.add('containerWithInformations__btn_pause');
+				containerWithInformationsBtnPauseAndRemove.classList.remove('containerWithInformations__btn_resume');
+				containerWithInformationsBtnPauseAndRemove.innerHTML = 'пауза';
+				// запускает таймер
+				timer = setInterval(function(){
+					elapsedTimePerGame.innerHTML = timerCount++;
+				},1000);
+				// отключает блокировку поля с картами
+				if (containerForCards.classList.contains('containerForCards_disabled')) {
+					containerForCards.classList.remove('containerForCards_disabled');
+				}
+			}
 		}
 	});
 
-
-	
-
+	function loadLocalStarageInfoToATable(){
+		// 6
+		if (localStorage["pointsForGames6WinPointsPerGame"] != undefined){
+			pointsForGames6LosePointsPerGame.innerHTML = localStorage["pointsForGames6LosePointsPerGame"];
+			pointsForGames6WinPointsPerGame.innerHTML = localStorage["pointsForGames6WinPointsPerGame"];
+			pointsForGames6ElapsedTimePerGame.innerHTML = localStorage["pointsForGames6ElapsedTimePerGame"];
+		}
+			// 8
+		if (localStorage["pointsForGames8WinPointsPerGame"] != undefined){
+			pointsForGames8LosePointsPerGame.innerHTML = localStorage["pointsForGames8LosePointsPerGame"];
+			pointsForGames8WinPointsPerGame.innerHTML = localStorage["pointsForGames8WinPointsPerGame"];
+			pointsForGames8ElapsedTimePerGame.innerHTML = localStorage["pointsForGames8ElapsedTimePerGame"];
+		}
+			// 10
+		if (localStorage["pointsForGames10WinPointsPerGame"] != undefined){
+			pointsForGames10LosePointsPerGame.innerHTML = localStorage["pointsForGames10LosePointsPerGame"];
+			pointsForGames10WinPointsPerGame.innerHTML = localStorage["pointsForGames10WinPointsPerGame"];
+			pointsForGames10ElapsedTimePerGame.innerHTML = localStorage["pointsForGames10ElapsedTimePerGame"];
+		}
+			// 12
+		if (localStorage["pointsForGames12WinPointsPerGame"] != undefined){
+			pointsForGames12LosePointsPerGame.innerHTML = localStorage["pointsForGames12LosePointsPerGame"];
+			pointsForGames12WinPointsPerGame.innerHTML = localStorage["pointsForGames12WinPointsPerGame"];
+			pointsForGames12ElapsedTimePerGame.innerHTML = localStorage["pointsForGames12ElapsedTimePerGame"];
+		}
+	}
 
 	
 
