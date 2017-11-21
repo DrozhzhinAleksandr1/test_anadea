@@ -4,7 +4,8 @@ window.onload = function(){
 	// get a container for the game
 		containerForCards = document.getElementsByClassName('containerForCards')[0],
 		// take mux number iteration
-		maxNumber;
+		maxNumber,
+		multiplier = 100/12;
 
 	// if Identical Selected Cards add class selected disabled
 	// and add 1 points
@@ -91,15 +92,140 @@ window.onload = function(){
 	// create and add elem to card game
 	function appendDiv(number, divNumber){
 		// create card elem
-		var div = document.createElement('div');
+		var div = document.createElement('div'),
+			frontDiv = document.createElement('div'),
+			backgroundPositionWidth,
+			backgroundPositionHeight; 
 		// add class for style css
 		div.className = 'containerForCards__cards containerForCards__cards_inGame containerForCards__cards_number' + number;
 		// add attributes to compare items
 		div.setAttribute('data-elem-number', divNumber);
+		// add class to element of card
+		frontDiv.classList.add('containerForCards__frontOfCard');
+		// if size 6*6
+		if(select.value == 6){
+			var numberWidth = divNumber % 6;
+			var numberHeight;
+			if(divNumber <= 6){
+				numberHeight = 0;
+			} else if(divNumber > 6 && divNumber <= 12){
+				numberHeight = 1;
+			} else {
+				numberHeight = 2;
+			}
+			
+		}
+		// if size 8*8
+		if(select.value == 8){
+			var numberWidth = divNumber % 8;
+			var numberHeight;
+			if(divNumber <= 8){
+				numberHeight = 0;
+			} else if(divNumber > 8 && divNumber <= 16){
+				numberHeight = 1;
+			} else if(divNumber > 16 && divNumber <= 24){
+				numberHeight = 2;
+			} else if(divNumber > 24 && divNumber <= 32){
+				numberHeight = 3;
+			} 
+			
+		}
+		// if size 10*10
+		if(select.value == 10){
+			var numberWidth = divNumber % 10;
+			var numberHeight;
+			if(divNumber <= 10){
+				numberHeight = 0;
+			} else if(divNumber > 10 && divNumber <= 20){
+				numberHeight = 1;
+			} else if(divNumber > 20 && divNumber <= 30){
+				numberHeight = 2;
+			} else if(divNumber > 30 && divNumber <= 40){
+				numberHeight = 3;
+			} else if(divNumber > 40 && divNumber <= 50){
+				numberHeight = 4;
+			}
+			
+		}
+		// if size 12*12
+		if(select.value == 12){
+			var numberWidth = divNumber % 12;
+			var numberHeight;
+
+			if(divNumber <= 12){
+				numberHeight = 0;
+			} else if(divNumber > 12 && divNumber <= 24){
+				numberHeight = 1;
+			} else if(divNumber > 24 && divNumber <= 36){
+				numberHeight = 2;
+			} else if(divNumber > 36 && divNumber <= 48){
+				numberHeight = 3;
+			} else if(divNumber > 48 && divNumber <= 60){
+				numberHeight = 4;
+			} else if(divNumber > 60 && divNumber <= 72){
+				numberHeight = 5;
+			} else if(divNumber > 72 && divNumber <= 84){
+				numberHeight = 6;
+			}
+			
+		}
+
+		if(numberWidth == 0){
+			backgroundPositionWidth = '0%';
+		} else if(numberWidth == 1){
+			backgroundPositionWidth = '9%';
+		} else if (numberWidth == 2){
+			backgroundPositionWidth = '18%';
+		} else if (numberWidth == 3){
+			backgroundPositionWidth = '27%';
+		} else if (numberWidth == 4){
+			backgroundPositionWidth = '36%';
+		} else if (numberWidth == 5){
+			backgroundPositionWidth = '45%';
+		} else if (numberWidth == 6){
+			backgroundPositionWidth = '54%';
+		} else if (numberWidth == 7){
+			backgroundPositionWidth = '63%';
+		} else if (numberWidth == 8){
+			backgroundPositionWidth = '72%';
+		} else if (numberWidth == 9){
+			backgroundPositionWidth = '81%';
+		} else if (numberWidth == 10){
+			backgroundPositionWidth = '90%';
+		} else if (numberWidth == 11){
+			backgroundPositionWidth = '100%';
+		} 
+
+
+		if(numberHeight == 0){
+			backgroundPositionHeight = '9%';
+		} else if (numberHeight == 1){
+			backgroundPositionHeight = '18%';
+		} else if (numberHeight == 2){
+			backgroundPositionHeight = '27%';
+		} else if (numberHeight == 3){
+			backgroundPositionHeight = '36%';
+		} else if (numberHeight == 4){
+			backgroundPositionHeight = '45%';
+		} else if (numberHeight == 5){
+			backgroundPositionHeight = '54%';
+		}  else if (numberHeight == 5){
+			backgroundPositionHeight = '63%';
+		} 
+
+
+
+		// add style to frontDiv
+		frontDiv.style.cssText="background-position:" + backgroundPositionWidth + " " + backgroundPositionHeight + " ; ";
+		// add elem to card		
+		div.appendChild(frontDiv);
 		// add elem to card container
-		div.innerHTML = divNumber;
 		containerForCards.appendChild(div);
 	}
+
+
+
+
 	// build card game
 	function buildCardGame(number){
 		// take mux number iteration
