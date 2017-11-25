@@ -4,8 +4,7 @@ window.onload = function(){
 	// get a container for the game
 		containerForCards = document.getElementsByClassName('containerForCards')[0],
 		// take mux number iteration
-		maxNumber,
-		multiplier = 100/12;
+		maxNumber;
 
 	// if Identical Selected Cards add class selected disabled
 	// and add 1 points
@@ -22,9 +21,9 @@ window.onload = function(){
 	var timerCount = 1;
 	// переменная для таймера
 	var timer;
-	// пауза рестарт
+	// пауза и продолжить
 	var containerWithInformationsBtnPauseAndRemove = document.getElementsByClassName('containerWithInformations__btn')[0];
-	// пауза рестарт
+	// рестарт
 	var containerWithInformationsBtnRestart = document.getElementsByClassName('containerWithInformations__btn')[1];
 
 	// таблица
@@ -46,7 +45,7 @@ window.onload = function(){
 	var pointsForGames12ElapsedTimePerGame = document.getElementsByClassName('pointsForGames_12')[0].getElementsByTagName('span')[2];
 
 	// construct a field with cards when the page loads
-	buildCardGame(6);
+	buildCardGame(select.value);
 	// load info from localStorage
 	loadLocalStarageInfoToATable();
 
@@ -170,53 +169,24 @@ window.onload = function(){
 			
 		}
 
+		// create backgroundPositionWidth
+
 		if(numberWidth == 0){
 			backgroundPositionWidth = '0%';
-		} else if(numberWidth == 1){
-			backgroundPositionWidth = '9%';
-		} else if (numberWidth == 2){
-			backgroundPositionWidth = '18%';
-		} else if (numberWidth == 3){
-			backgroundPositionWidth = '27%';
-		} else if (numberWidth == 4){
-			backgroundPositionWidth = '36%';
-		} else if (numberWidth == 5){
-			backgroundPositionWidth = '45%';
-		} else if (numberWidth == 6){
-			backgroundPositionWidth = '54%';
-		} else if (numberWidth == 7){
-			backgroundPositionWidth = '63%';
-		} else if (numberWidth == 8){
-			backgroundPositionWidth = '72%';
-		} else if (numberWidth == 9){
-			backgroundPositionWidth = '81%';
-		} else if (numberWidth == 10){
-			backgroundPositionWidth = '90%';
-		} else if (numberWidth == 11){
-			backgroundPositionWidth = '100%';
-		} 
+		} else {
+			backgroundPositionWidth = numberWidth*9 + '%';
+		}
 
+		// create backgroundPositionHeight
 
 		if(numberHeight == 0){
-			backgroundPositionHeight = '9%';
-		} else if (numberHeight == 1){
-			backgroundPositionHeight = '18%';
-		} else if (numberHeight == 2){
-			backgroundPositionHeight = '27%';
-		} else if (numberHeight == 3){
-			backgroundPositionHeight = '36%';
-		} else if (numberHeight == 4){
-			backgroundPositionHeight = '45%';
-		} else if (numberHeight == 5){
-			backgroundPositionHeight = '54%';
-		}  else if (numberHeight == 5){
-			backgroundPositionHeight = '63%';
-		} 
-
-
+			backgroundPositionHeight = '0%';
+		} else {
+			backgroundPositionHeight = numberHeight*9 + '%';
+		}
 
 		// add style to frontDiv
-		frontDiv.style.cssText="background-position:" + backgroundPositionWidth + " " + backgroundPositionHeight + " ; ";
+		frontDiv.style.cssText="background-position:" + backgroundPositionWidth + " " + backgroundPositionHeight + ";";
 		// add elem to card		
 		div.appendChild(frontDiv);
 		// add elem to card container
@@ -228,10 +198,11 @@ window.onload = function(){
 
 	// build card game
 	function buildCardGame(number){
+		deleteWinMessageIfPresent();
 		// take mux number iteration
 		maxNumber = number*number,
 		// take half from nax number
-			halfMaxNumber = maxNumber/2;
+		halfMaxNumber = maxNumber/2;
 		// clear card game container
 		containerForCards.innerHTML = '';
 		// create array for number cards
@@ -254,7 +225,24 @@ window.onload = function(){
 			appendDiv(number, divNumber);
 			// remove the element of the array that it was taken again
 			divNumberArray.splice(rand, 1);
-		}			
+		}
+		// показать все карты и через 3 секунды скрыть их
+		showAllImg(maxNumber); 
+
+	}
+
+	function showAllImg(maxNumber){
+		containerForCards.classList.add('containerForCards__disabled');
+		var cards = document.getElementsByClassName('containerForCards__cards');
+		for(var i = 1; i<=(maxNumber);i++){
+			CardAddClassSelected(cards[i - 1]);
+		}
+		setTimeout(function(){
+			for(var i = 1; i<=(maxNumber);i++){
+				CardRemoveClassSelected(cards[i - 1])
+			}
+		containerForCards.classList.remove('containerForCards__disabled');
+		},3000);
 	}
 
 	
@@ -262,6 +250,10 @@ window.onload = function(){
 	// mark the selected cards
 	function CardAddClassSelected(elem){
 		elem.classList.add('containerForCards__cards_selected');
+	}
+	// remove mark the selected cards
+	function CardRemoveClassSelected(elem){
+		elem.classList.remove('containerForCards__cards_selected');
 	}
 	// if 2 cards are selected to remove the class select
 
@@ -272,13 +264,14 @@ window.onload = function(){
 
 		setTimeout(function() {
 			for(var i=1;i>=0;i--){
-				selectedCard[i].classList.remove('containerForCards__cards_selected');
+				CardRemoveClassSelected(selectedCard[i]);
 			}
 			viewingPermission = true;
 
 			if(+maxNumber == +getNumberDisabledCards()){
 				countResultPerGame();
-				transferTheResultToATable();			
+				transferTheResultToATable();
+				showWinMessage();			
 			} 
 
 		}, 700);
@@ -352,7 +345,21 @@ window.onload = function(){
 		}
 
 	}
-
+	// создает сообщение о победе
+	function showWinMessage(){
+		var winMessage = document.createElement('div');
+		winMessage.classList.add('containerForCards__winMessage');
+		winMessage.innerHTML = '<p class="containerForCards__pWinMessage">Вы успешно открыли все карточки!</p>';
+		containerForCards.appendChild(winMessage);
+	}
+	// удаляет сообщение о победе
+	function deleteWinMessageIfPresent(){
+		var winMessage = containerForCards.getElementsByClassName('containerForCards__winMessage')
+		if(winMessage.length > 0){
+			winMessage[0].parentNode.removeChild(winMessage[0]);
+		}
+	}
+	// если выбранные карты совпадают то удаляет их и добавляет очки 
 	function ifIdenticalSelectedCards(){
 		var selectedCard = document.getElementsByClassName('containerForCards__cards_selected');
 		if(selectedCard.length == 2){
