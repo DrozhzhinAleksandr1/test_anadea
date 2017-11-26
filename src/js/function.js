@@ -4,7 +4,9 @@ window.onload = function(){
 	// get a container for the game
 		containerForCards = document.getElementsByClassName('containerForCards')[0],
 		// take mux number iteration
-		maxNumber;
+		maxNumber,
+		// get a select with style
+		selectStyle = document.getElementsByClassName('containerWithInformations__cardGameStyle')[0];
 
 	// if Identical Selected Cards add class selected disabled
 	// and add 1 points
@@ -44,6 +46,8 @@ window.onload = function(){
 	var pointsForGames12WinPointsPerGame = document.getElementsByClassName('pointsForGames_12')[0].getElementsByTagName('span')[1];
 	var pointsForGames12ElapsedTimePerGame = document.getElementsByClassName('pointsForGames_12')[0].getElementsByTagName('span')[2];
 
+	// set game style
+	setGameStyle(selectStyle.value);
 	// construct a field with cards when the page loads
 	buildCardGame(select.value);
 	// load info from localStorage
@@ -53,6 +57,12 @@ window.onload = function(){
 	select.addEventListener('change', function(){
 		var selectValue = +select.value;
 		buildCardGameWhenClick(selectValue);	
+	});
+
+	// if selectStyle change run setGameStyle
+	selectStyle.addEventListener('change', function(){
+		var selectStyleValue = +selectStyle.value;
+		setGameStyle(selectStyleValue);
 	});
 
 	// if select change run buildCardGame
@@ -194,6 +204,28 @@ window.onload = function(){
 	}
 
 
+	// set game style function
+	function setGameStyle(style){
+		var body = document.getElementsByTagName('body')[0];
+		// style1 = default style
+		// style 2 = body with className "style2"
+		// style 3 = body with className "style3"
+		if(body.classList.contains('style2')){
+			body.classList.remove('style2');
+		}
+		if(body.classList.contains('style3')){
+			body.classList.remove('style3');
+		}
+		if(style == 1){
+			return;
+		}
+		if(style == 2){
+			body.classList.add('style2');
+		}
+		if(style == 3){
+			body.classList.add('style3');
+		}
+	}
 
 
 	// build card game
@@ -228,7 +260,6 @@ window.onload = function(){
 		}
 		// показать все карты и через 3 секунды скрыть их
 		showAllImg(maxNumber); 
-
 	}
 
 	function showAllImg(maxNumber){
