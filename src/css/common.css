@@ -421,7 +421,7 @@ div,button {
 
 .style2 .containerWithInformations__btn_pause{
 	border-color: rgb(219, 216, 15);
-	color: color: #fff;
+	color: #fff;
 }
 .style2 .containerWithInformations__btn_pause:hover{
 	border-color: #fff;
@@ -436,7 +436,7 @@ div,button {
 	border-color: #fff;
 }
 .style2 .containerWithInformations__btn_restart{
-	color: color: #fff;
+	color: #fff;
 	border-color: rgb(249, 44, 44);
 }
 .style2 .containerWithInformations__btn_restart:hover{
