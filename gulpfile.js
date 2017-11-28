@@ -9,11 +9,9 @@ var gulp 			= require('gulp'),
 
 gulp.task('css', function(){
 	return gulp.src(['!src/css/common.css','src/css/*.css'])
-	// .pipe(cssnano())
 	.pipe(concat('common.css'))	
 	.pipe(gulp.dest('src/css'))
 });
-
 
 gulp.task('js',function(){
 	return gulp.src(['!src/js/common.js','src/js/**/*.js'])
@@ -30,7 +28,6 @@ gulp.task('BS',function(){
 	});
 });
 
-
 gulp.task('clean',function(){
 	return del.sync('dist');
 });
@@ -41,18 +38,14 @@ gulp.task('watch', ['BS','css', 'js'] , function(){
 	gulp.watch('src/js/**/*.js', ['js', browserSync.reload]);
 });
 
-
-
 gulp.task('build', ['clean', 'css', 'js'] ,function(){
 var buildCss = gulp.src(['!src/css/common.css','src/css/**/*.css'])	
 	.pipe(concat('common.css'))	
 	.pipe(autoprefixer(['last 15 versions','> 1%', 'ie 8', 'ie 7'],{cascade:true}))
 	.pipe(cssnano())
-	.pipe(rename({preffix:'.min'}))
 	.pipe(gulp.dest('dist/css'));
 var buildJs = gulp.src('src/js/common.js')
 	.pipe(uglify())
-	.pipe(rename({preffix:'.min'}))
 	.pipe(gulp.dest('dist/js'));
 var buildImg = gulp.src('src/img/*')
 	.pipe(gulp.dest('dist/img'));
