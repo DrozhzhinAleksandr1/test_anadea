@@ -45,21 +45,27 @@ var view = {
 			winMessage[0].parentNode.removeChild(winMessage[0]);
 		}
 	},
+	addStartTimerClassInConteiner: function(){
+		view.containerForCards.classList.add('startTimer');
+	},
+	removeStartTimerClassInConteiner: function(){
+		view.containerForCards.classList.remove('startTimer');
+	},
 	// add elem to card container
 	addElemToCardContainer: function(div){
 		this.containerForCards.appendChild(div);
 	},	
 	// clear card game container
 	clearCardGameContainer: function(){
-		view.containerForCards.innerHTML = '';
+		this.containerForCards.innerHTML = '';
 	},
 	// disable containerForCards
 	disableContainerForCards: function(){
-		view.containerForCards.classList.add('containerForCards_disabled');
+		this.containerForCards.classList.add('containerForCards_disabled');
 	},
 	// enable containerForCards
 	enableContainerForCards: function(){
-		view.containerForCards.classList.remove('containerForCards_disabled');
+		this.containerForCards.classList.remove('containerForCards_disabled');
 	},
 	// disable card
 	disableCard: function(card){
@@ -67,26 +73,26 @@ var view = {
 	},	
 	// update victory points
 	updateVictoryPoints: function(value){
-		view.pointsPerGame.innerHTML = value;
+		this.pointsPerGame.innerHTML = value;
 	},
 	// update lose points
 	updateLosePoints: function(value){
-		view.losePointsPerGame.innerHTML = value;
+		this.losePointsPerGame.innerHTML = value;
 	},
 	// update elapsed time per game
 	updateElapsedTimePerGame: function(value){
-		view.elapsedTimePerGame.innerHTML = value;
+		this.elapsedTimePerGame.innerHTML = value;
 	},
 	// output the result per game
 	outputTheResultPerGame: function(value){
-		view.winPointsPerGame.innerHTML = value;
+		this.winPointsPerGame.innerHTML = value;
 	},
 	// zeroes the points in the table
 	zeroesThePointsInTheTable: function(){
-		view.pointsPerGame.innerHTML = 0;
-		view.losePointsPerGame.innerHTML = 0;
-		view.winPointsPerGame.innerHTML = 0;
-		view.elapsedTimePerGame.innerHTML = 0;
+		this.pointsPerGame.innerHTML = 0;
+		this.losePointsPerGame.innerHTML = 0;
+		this.winPointsPerGame.innerHTML = 0;
+		this.elapsedTimePerGame.innerHTML = 0;
 	},
 	// sets the style of the pause button
 	setsTheStyleOfThePauseButton: function(){
@@ -125,73 +131,73 @@ var view = {
 	loadLocalStarageInfoToATable: function(){
 		// 6
 		if (localStorage["pointsForGames6WinPointsPerGame"] != undefined){
-			view.pointsForGames6LosePointsPerGame.innerHTML = localStorage["pointsForGames6LosePointsPerGame"];
-			view.pointsForGames6WinPointsPerGame.innerHTML = localStorage["pointsForGames6WinPointsPerGame"];
-			view.pointsForGames6ElapsedTimePerGame.innerHTML = localStorage["pointsForGames6ElapsedTimePerGame"];
+			this.pointsForGames6LosePointsPerGame.innerHTML = localStorage["pointsForGames6LosePointsPerGame"];
+			this.pointsForGames6WinPointsPerGame.innerHTML = localStorage["pointsForGames6WinPointsPerGame"];
+			this.pointsForGames6ElapsedTimePerGame.innerHTML = localStorage["pointsForGames6ElapsedTimePerGame"];
 		}
 			// 8
 		if (localStorage["pointsForGames8WinPointsPerGame"] != undefined){
-			view.pointsForGames8LosePointsPerGame.innerHTML = localStorage["pointsForGames8LosePointsPerGame"];
-			view.pointsForGames8WinPointsPerGame.innerHTML = localStorage["pointsForGames8WinPointsPerGame"];
-			view.pointsForGames8ElapsedTimePerGame.innerHTML = localStorage["pointsForGames8ElapsedTimePerGame"];
+			this.pointsForGames8LosePointsPerGame.innerHTML = localStorage["pointsForGames8LosePointsPerGame"];
+			this.pointsForGames8WinPointsPerGame.innerHTML = localStorage["pointsForGames8WinPointsPerGame"];
+			this.pointsForGames8ElapsedTimePerGame.innerHTML = localStorage["pointsForGames8ElapsedTimePerGame"];
 		}
 			// 10
 		if (localStorage["pointsForGames10WinPointsPerGame"] != undefined){
-			view.pointsForGames10LosePointsPerGame.innerHTML = localStorage["pointsForGames10LosePointsPerGame"];
-			view.pointsForGames10WinPointsPerGame.innerHTML = localStorage["pointsForGames10WinPointsPerGame"];
-			view.pointsForGames10ElapsedTimePerGame.innerHTML = localStorage["pointsForGames10ElapsedTimePerGame"];
+			this.pointsForGames10LosePointsPerGame.innerHTML = localStorage["pointsForGames10LosePointsPerGame"];
+			this.pointsForGames10WinPointsPerGame.innerHTML = localStorage["pointsForGames10WinPointsPerGame"];
+			this.pointsForGames10ElapsedTimePerGame.innerHTML = localStorage["pointsForGames10ElapsedTimePerGame"];
 		}
 			// 12
 		if (localStorage["pointsForGames12WinPointsPerGame"] != undefined){
-			view.pointsForGames12LosePointsPerGame.innerHTML = localStorage["pointsForGames12LosePointsPerGame"];
-			view.pointsForGames12WinPointsPerGame.innerHTML = localStorage["pointsForGames12WinPointsPerGame"];
-			view.pointsForGames12ElapsedTimePerGame.innerHTML = localStorage["pointsForGames12ElapsedTimePerGame"];
+			this.pointsForGames12LosePointsPerGame.innerHTML = localStorage["pointsForGames12LosePointsPerGame"];
+			this.pointsForGames12WinPointsPerGame.innerHTML = localStorage["pointsForGames12WinPointsPerGame"];
+			this.pointsForGames12ElapsedTimePerGame.innerHTML = localStorage["pointsForGames12ElapsedTimePerGame"];
 		}
 	},
 	// move result to table
 	transferTheResultToATable: function(){
 		if(+controller.select.value == 6){
-			if(view.pointsForGames6WinPointsPerGame.innerHTML < view.winPointsPerGame.innerHTML){
-				view.pointsForGames6LosePointsPerGame.innerHTML = view.losePointsPerGame.innerHTML;
-				view.pointsForGames6WinPointsPerGame.innerHTML = view.winPointsPerGame.innerHTML;
-				view.pointsForGames6ElapsedTimePerGame.innerHTML = view.elapsedTimePerGame.innerHTML;
+			if(this.pointsForGames6WinPointsPerGame.innerHTML < this.winPointsPerGame.innerHTML){
+				this.pointsForGames6LosePointsPerGame.innerHTML = this.losePointsPerGame.innerHTML;
+				this.pointsForGames6WinPointsPerGame.innerHTML = this.winPointsPerGame.innerHTML;
+				this.pointsForGames6ElapsedTimePerGame.innerHTML = this.elapsedTimePerGame.innerHTML;
 
-				localStorage["pointsForGames6LosePointsPerGame"] = view.losePointsPerGame.innerHTML;
-				localStorage["pointsForGames6WinPointsPerGame"] = view.winPointsPerGame.innerHTML;
-				localStorage["pointsForGames6ElapsedTimePerGame"] = view.elapsedTimePerGame.innerHTML;
+				localStorage["pointsForGames6LosePointsPerGame"] = this.losePointsPerGame.innerHTML;
+				localStorage["pointsForGames6WinPointsPerGame"] = this.winPointsPerGame.innerHTML;
+				localStorage["pointsForGames6ElapsedTimePerGame"] = this.elapsedTimePerGame.innerHTML;
 			}
 		}
 		if(+controller.select.value == 8){
-			if(view.pointsForGames8WinPointsPerGame.innerHTML < view.winPointsPerGame.innerHTML){
-				pointsForGames8LosePointsPerGame.innerHTML = view.losePointsPerGame.innerHTML;
-				pointsForGames8WinPointsPerGame.innerHTML = view.winPointsPerGame.innerHTML;
-				pointsForGames8ElapsedTimePerGame.innerHTML = view.elapsedTimePerGame.innerHTML;
+			if(this.pointsForGames8WinPointsPerGame.innerHTML < this.winPointsPerGame.innerHTML){
+				this.pointsForGames8LosePointsPerGame.innerHTML = this.losePointsPerGame.innerHTML;
+				this.pointsForGames8WinPointsPerGame.innerHTML = this.winPointsPerGame.innerHTML;
+				this.pointsForGames8ElapsedTimePerGame.innerHTML = this.elapsedTimePerGame.innerHTML;
 
-				localStorage["pointsForGames8LosePointsPerGame"] = view.losePointsPerGame.innerHTML;
-				localStorage["pointsForGames8WinPointsPerGame"] = view.winPointsPerGame.innerHTML;
-				localStorage["pointsForGames8ElapsedTimePerGame"] = view.elapsedTimePerGame.innerHTML;
+				localStorage["pointsForGames8LosePointsPerGame"] = this.losePointsPerGame.innerHTML;
+				localStorage["pointsForGames8WinPointsPerGame"] = this.winPointsPerGame.innerHTML;
+				localStorage["pointsForGames8ElapsedTimePerGame"] = this.elapsedTimePerGame.innerHTML;
 			}
 		}
 		if(+controller.select.value == 10){
-			if(view.pointsForGames10WinPointsPerGame.innerHTML < view.winPointsPerGame.innerHTML){
-				view.pointsForGames10LosePointsPerGame.innerHTML = view.losePointsPerGame.innerHTML;
-				view.pointsForGames10WinPointsPerGame.innerHTML = view.winPointsPerGame.innerHTML;
-				view.pointsForGames10ElapsedTimePerGame.innerHTML = view.elapsedTimePerGame.innerHTML;
+			if(this.pointsForGames10WinPointsPerGame.innerHTML < this.winPointsPerGame.innerHTML){
+				this.pointsForGames10LosePointsPerGame.innerHTML = this.losePointsPerGame.innerHTML;
+				this.pointsForGames10WinPointsPerGame.innerHTML = this.winPointsPerGame.innerHTML;
+				this.pointsForGames10ElapsedTimePerGame.innerHTML = this.elapsedTimePerGame.innerHTML;
 
-				localStorage["pointsForGames10LosePointsPerGame"] = view.losePointsPerGame.innerHTML;
-				localStorage["pointsForGames10WinPointsPerGame"] = view.winPointsPerGame.innerHTML;
-				localStorage["pointsForGames10ElapsedTimePerGame"] = view.elapsedTimePerGame.innerHTML;
+				localStorage["pointsForGames10LosePointsPerGame"] = this.losePointsPerGame.innerHTML;
+				localStorage["pointsForGames10WinPointsPerGame"] = this.winPointsPerGame.innerHTML;
+				localStorage["pointsForGames10ElapsedTimePerGame"] = this.elapsedTimePerGame.innerHTML;
 			}
 		}
 		if(+controller.select.value == 12){
-			if(view.pointsForGames12WinPointsPerGame.innerHTML < view.winPointsPerGame.innerHTML){
-				view.pointsForGames12LosePointsPerGame.innerHTML = view.losePointsPerGame.innerHTML;
-				view.pointsForGames12WinPointsPerGame.innerHTML = view.winPointsPerGame.innerHTML;
-				view.pointsForGames12ElapsedTimePerGame.innerHTML = view.elapsedTimePerGame.innerHTML;
+			if(this.pointsForGames12WinPointsPerGame.innerHTML < this.winPointsPerGame.innerHTML){
+				this.pointsForGames12LosePointsPerGame.innerHTML = this.losePointsPerGame.innerHTML;
+				this.pointsForGames12WinPointsPerGame.innerHTML = this.winPointsPerGame.innerHTML;
+				this.pointsForGames12ElapsedTimePerGame.innerHTML = this.elapsedTimePerGame.innerHTML;
 
-				localStorage["pointsForGames12LosePointsPerGame"] = view.losePointsPerGame.innerHTML;
-				localStorage["pointsForGames12WinPointsPerGame"] = view.winPointsPerGame.innerHTML;
-				localStorage["pointsForGames12ElapsedTimePerGame"] = view.elapsedTimePerGame.innerHTML;
+				localStorage["pointsForGames12LosePointsPerGame"] = this.losePointsPerGame.innerHTML;
+				localStorage["pointsForGames12WinPointsPerGame"] = this.winPointsPerGame.innerHTML;
+				localStorage["pointsForGames12ElapsedTimePerGame"] = this.elapsedTimePerGame.innerHTML;
 			}
 		}
 	}
@@ -244,18 +250,18 @@ var model = {
 	// create randomDivNumberArray
 	createRandomDivNumberArray: function(number){
 		// take mux number iteration
-		model.maxNumber = number*number,
+		this.maxNumber = number*number,
 		// take half from nax number
-		halfMaxNumber = model.maxNumber/2;
+		halfMaxNumber = this.maxNumber/2;
 		// create array for number cards
 		var divNumberArray = [],
 			randomDivNumberArray = [];
 		// add all number cards into array
-		for(var z = 1; z<=(model.maxNumber);z++ ){
+		for(var z = 1; z<=(this.maxNumber);z++ ){
 			divNumberArray[z - 1] = z;
 		}
 		//  construct a field with cards
-		for(var i = 1; i<=(model.maxNumber);i++){
+		for(var i = 1; i<=(this.maxNumber);i++){
 			// we obtain the index of the random element of the array
 			var rand = Math.floor(Math.random() * divNumberArray.length),
 			// get elem number
@@ -304,8 +310,8 @@ var model = {
 			return numberDisabledCards;
 	},	
 	ifGameOverStopTimer: function(){
-		if(+model.maxNumber == +model.getNumberDisabledCards()){
-			clearInterval(model.timer);
+		if(+this.maxNumber == +this.getNumberDisabledCards){
+			clearInterval(this.timer);
 		}
 	},
 
@@ -333,7 +339,7 @@ var controller = {
 		var numberWidth,
 			numberHeight;
 		// if size 6*6
-		if(controller.select.value == 6){
+		if(this.select.value == 6){
 			numberWidth = divNumber % 6;
 			if(divNumber <= 6){
 				numberHeight = 0;
@@ -344,7 +350,7 @@ var controller = {
 			}
 		}
 		// if size 8*8
-		if(controller.select.value == 8){
+		if(this.select.value == 8){
 			numberWidth = divNumber % 8;
 			if(divNumber <= 8){
 				numberHeight = 0;
@@ -357,7 +363,7 @@ var controller = {
 			} 
 		}
 		// if size 10*10
-		if(controller.select.value == 10){
+		if(this.select.value == 10){
 			numberWidth = divNumber % 10;
 			if(divNumber <= 10){
 				numberHeight = 0;
@@ -372,7 +378,7 @@ var controller = {
 			}
 		}
 		// if size 12*12
-		if(controller.select.value == 12){
+		if(this.select.value == 12){
 			numberWidth = divNumber % 12;
 			if(divNumber <= 12){
 				numberHeight = 0;
@@ -403,10 +409,10 @@ var controller = {
 		var randomDivNumberArray = model.createRandomDivNumberArray(number);
 
 		for (var i = 0; i < randomDivNumberArray.length; i++){
-			controller.appendDiv(number, randomDivNumberArray[i]);
+			this.appendDiv(number, randomDivNumberArray[i]);
 		}		
 		// Show all cards and after 3 seconds hide them
-		controller.showAllImg(model.maxNumber); 
+		this.showAllImg(model.maxNumber); 
 	},
 	showAllImg: function(maxNumber){
 		view.disableContainerForCards();
@@ -425,17 +431,17 @@ var controller = {
 		},3000);
 	},
 	buildCardGameWhenClick: function(selectValue){
-		controller.buildCardGame(selectValue);
+		this.buildCardGame(selectValue);
 		// adds a class to start the timer
 		if (!view.containerForCards.classList.contains('startTimer')) {
-			view.containerForCards.classList.add('startTimer');
+			view.addStartTimerClassInConteiner()
 		}
 		// reset the timer and time
 		clearInterval(model.timer);
 		model.timerCount = 1;
 		view.zeroesThePointsInTheTable();
 		// puts the button on the value of the pause
-		if(controller.containerWithInformationsBtnPauseAndRemove.classList.contains('containerWithInformations__btn_resume')){
+		if(this.containerWithInformationsBtnPauseAndRemove.classList.contains('containerWithInformations__btn_resume')){
 		// changes the appearance of the button
 			view.setsTheStyleOfThePauseButton();
 		}
@@ -465,21 +471,53 @@ var controller = {
 					view.disableCard(selectedCard[i]);
 				}
 				view.updateVictoryPoints(model.add1WinPoints());
-				controller.ifSelectedCards2RemoveClassSelected(selectedCard);
+				this.ifSelectedCards2RemoveClassSelected(selectedCard);
 			} else{
-				controller.ifSelectedCards2RemoveClassSelected(selectedCard);
+				this.ifSelectedCards2RemoveClassSelected(selectedCard);
 				view.updateLosePoints(model.add1LosePoints());
 			}
 		}
 	},		
 	startTimer: function(){
 		if(view.containerForCards.classList.contains('startTimer')){
-			view.containerForCards.classList.remove('startTimer');
+			view.removeStartTimerClassInConteiner();
 			model.timer = setInterval(function(){
 				view.updateElapsedTimePerGame(model.timerCount++);
 			},1000);
 		}
 	},
+	// Allows you to open the following cards
+	allowsYouToOpenTheFollowingCards: function(containerTarget){
+		if(model.viewingPermission){
+			if(containerTarget.classList.contains('containerForCards__cards')){
+				if(containerTarget.classList.contains('containerForCards__cards_inGame')){
+					view.cardAddClassSelected(containerTarget);
+				}
+			}
+			controller.ifIdenticalSelectedCards();
+		}
+	},
+	clickPauseOrResume: function(){
+		if(!view.containerForCards.classList.contains('startTimer')){
+			if(controller.containerWithInformationsBtnPauseAndRemove.classList.contains('containerWithInformations__btn_pause')){
+				view.setsTheStyleOfTheResumeButton();
+
+				clearInterval(model.timer);
+
+				view.disableContainerForCards();
+			} else if(controller.containerWithInformationsBtnPauseAndRemove.classList.contains('containerWithInformations__btn_resume')){
+				view.setsTheStyleOfThePauseButton();
+
+				model.timer = setInterval(function(){
+					view.updateElapsedTimePerGame(model.timerCount++);
+				},1000);
+				if (view.containerForCards.classList.contains('containerForCards_disabled')) {
+					view.enableContainerForCards();
+				}
+			}
+		}
+	},
+	
 }
 
 
@@ -499,7 +537,7 @@ window.onload = function(){
 			// load info from localStorage
 			view.loadLocalStarageInfoToATable();
 			// Add a container class to start the timer on the first click
-			view.containerForCards.classList.add('startTimer');
+			view.addStartTimerClassInConteiner();
 		},
 		event: function(){
 			// if select change run buildCardGame
@@ -518,38 +556,12 @@ window.onload = function(){
 			view.containerForCards.addEventListener('click', controller.startTimer);
 			view.containerForCards.addEventListener('click', model.ifGameOverStopTimer);
 			// Allows you to open the following cards
-			view.containerForCards.addEventListener('click',function(event){
+			view.containerForCards.addEventListener('click', function(event){
 				var containerTarget = event.target;
-				if(model.viewingPermission){
-					if(containerTarget.classList.contains('containerForCards__cards')){
-						if(containerTarget.classList.contains('containerForCards__cards_inGame')){
-							view.cardAddClassSelected(containerTarget);
-						}
-					}
-					controller.ifIdenticalSelectedCards();
-				}
+				controller.allowsYouToOpenTheFollowingCards(containerTarget);
 			});
 			// pause and resume
-			controller.containerWithInformationsBtnPauseAndRemove.addEventListener('click',function(){
-				if(!view.containerForCards.classList.contains('startTimer')){
-					if(controller.containerWithInformationsBtnPauseAndRemove.classList.contains('containerWithInformations__btn_pause')){
-						view.setsTheStyleOfTheResumeButton();
-
-						clearInterval(model.timer);
-
-						view.disableContainerForCards();
-					} else if(controller.containerWithInformationsBtnPauseAndRemove.classList.contains('containerWithInformations__btn_resume')){
-						view.setsTheStyleOfThePauseButton();
-
-						model.timer = setInterval(function(){
-							view.updateElapsedTimePerGame(model.timerCount++);
-						},1000);
-						if (view.containerForCards.classList.contains('containerForCards_disabled')) {
-							view.enableContainerForCards();
-						}
-					}
-				}
-			});
+			controller.containerWithInformationsBtnPauseAndRemove.addEventListener('click', controller.clickPauseOrResume);
 		}
 	}
 
