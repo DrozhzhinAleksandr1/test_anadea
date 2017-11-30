@@ -321,12 +321,7 @@ div,button {
 		float: none;
 	}
 }
-
-
-
-
 /*result table*/
-
 .bestResults{
 	width: 1200px;
 	border-radius: 10px;
@@ -390,12 +385,7 @@ div,button {
 		margin-bottom:0;
 	}
 }
-
-
 /* change of style */
-/* style 2*/
-/* style 2*/
-/* style 2*/
 /* style 2*/
 .style2  .containerForCards__cards{
 	background-color: rgb(237, 66, 66);
@@ -448,9 +438,6 @@ div,button {
 	color: rgb(104, 34, 34);
 }
 /*style 3*/
-/*style 3*/
-/*style 3*/
-/*style 3*/
 .style3  .containerForCards__cards{
 	background-color: rgb(119, 186, 134);
 }
@@ -480,7 +467,6 @@ div,button {
 	border-radius: 45%;
 	font-size: 14px;
 }
-
 .style3 .containerWithInformations__btn_pause{
 	border-color: rgb(183, 181, 33);
 	color: rgb(183, 181, 33);
